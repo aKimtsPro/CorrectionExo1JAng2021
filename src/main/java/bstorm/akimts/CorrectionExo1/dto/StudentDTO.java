@@ -1,5 +1,6 @@
 package bstorm.akimts.CorrectionExo1.dto;
 
+import bstorm.akimts.CorrectionExo1.constraints.OldTimeResults;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @FieldDefaults(level=AccessLevel.PRIVATE)
 @Builder
+@OldTimeResults
 public class StudentDTO implements IdentifiedDTO<Integer> {
     @NotNull
     Integer id;
@@ -23,7 +25,7 @@ public class StudentDTO implements IdentifiedDTO<Integer> {
     //@Pattern(regexp = "")
     //@Email
     String login;
-    SectionStudentDTO section;
+    SmallSectionDTO section;
     @NotNull
     @Min(0) @Max(20)
     // @Positive // @Negative // NegativeOrZero // PositiveOrZero

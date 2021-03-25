@@ -66,6 +66,8 @@ public class SectionService implements CrudService<SectionDTO, Integer> {
         Section s = repo.getOne(integer);
         s.setName(toUpdate.getName());
         s.setDelegateId(toUpdate.getDelegateId());
+
+        repo.save(s);
     }
 
     @Override

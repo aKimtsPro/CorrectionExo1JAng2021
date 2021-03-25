@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level= AccessLevel.PRIVATE)
 @Builder
-public class SectionStudentDTO {
+public class SmallSectionDTO {
     Integer id;
     String name;
 }

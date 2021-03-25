@@ -47,18 +47,4 @@ public class SectionController extends AbstractCrudController<SectionDTO, Intege
 //        }
 //    }
 
-    @GetMapping("/test2")
-    public void test2(@RequestHeader("accept") String contentType){
-        System.out.println(contentType);
-    }
-
-    @GetMapping("/params")
-    public void testParams(@RequestParam Map<String, String> params){
-        params.forEach((key, value) -> System.out.println(key + " - " + value));
-    }
-
-    @GetMapping("/param")
-    public void testParam(@RequestParam("id") int id ){
-        System.out.println(id);
-    }
 }

@@ -40,7 +40,7 @@ public abstract class AbstractCrudController<DTO extends IdentifiedDTO<ID>, ID> 
 
     @Override
     @PutMapping("/{id}") // PUT - localhost:8080/section/id
-    public ResponseEntity<DTO> update(@RequestBody DTO dto, @PathVariable("id") ID id) {
+    public ResponseEntity<DTO> update(@Valid @RequestBody DTO dto, @PathVariable("id") ID id) {
 
         try {
             service.update(dto, id);

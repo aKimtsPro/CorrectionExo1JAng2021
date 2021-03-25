@@ -56,10 +56,9 @@ public class StudentService implements CrudService<StudentDTO, Integer> {
         if ( toUpdate == null || id == null )
             throw new IllegalArgumentException();
 
+        Student s = mapper.toEntity(toUpdate);
         Student entity = repo.findById(id)
                 .orElseThrow(() -> new ElementNotFoundException(id));
-
-        Student s = mapper.toEntity(toUpdate);
 
         entity.setFirstname(s.getFirstname());
         entity.setLastname(s.getLastname());
@@ -68,6 +67,8 @@ public class StudentService implements CrudService<StudentDTO, Integer> {
         entity.setResult(s.getResult());
         entity.setCourseId(s.getCourseId());
         entity.setSection(s.getSection());
+
+        repo.save(entity);
     }
 
     @Override

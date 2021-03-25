@@ -1,21 +1,16 @@
 package bstorm.akimts.CorrectionExo1.mapper;
 
-import bstorm.akimts.CorrectionExo1.dto.SectionDTO;
-import bstorm.akimts.CorrectionExo1.dto.SectionStudentDTO;
 import bstorm.akimts.CorrectionExo1.dto.StudentDTO;
-import bstorm.akimts.CorrectionExo1.entities.Section;
 import bstorm.akimts.CorrectionExo1.entities.Student;
 import bstorm.akimts.CorrectionExo1.repository.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
-
 @Component
 public class StudentMapper implements Mapper<StudentDTO, Student> {
 
     @Autowired
-    private SectionStudentMapper sMapper;
+    private SmallSectionMapper sMapper;
     @Autowired
     private SectionRepository repo;
 
