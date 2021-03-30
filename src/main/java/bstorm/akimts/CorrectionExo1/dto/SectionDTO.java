@@ -1,6 +1,8 @@
 package bstorm.akimts.CorrectionExo1.dto;
 
 import bstorm.akimts.CorrectionExo1.constraints.Waged;
+import bstorm.akimts.CorrectionExo1.dto.IdentifiedDTO;
+import bstorm.akimts.CorrectionExo1.dto.StudentSectionDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

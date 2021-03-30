@@ -1,7 +1,9 @@
 package bstorm.akimts.CorrectionExo1.service;
 
 import bstorm.akimts.CorrectionExo1.dto.SectionDTO;
+import bstorm.akimts.CorrectionExo1.dto.StudentDTO;
 import bstorm.akimts.CorrectionExo1.entities.Section;
+import bstorm.akimts.CorrectionExo1.entities.Student;
 import bstorm.akimts.CorrectionExo1.exceptions.ElementAlreadyExistsException;
 import bstorm.akimts.CorrectionExo1.exceptions.ElementNotFoundException;
 import bstorm.akimts.CorrectionExo1.mapper.Mapper;
@@ -10,18 +12,19 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
 public class SectionService implements CrudService<SectionDTO, Integer> {
 
-    private SectionRepository repo;
-    private Mapper<SectionDTO, Section> mapper;
+    private final SectionRepository repo;
+    private final Mapper<SectionDTO, Section> mapper;
+    private final Mapper<StudentDTO, Student> sMapper;
 
-    public SectionService(SectionRepository repo, Mapper<SectionDTO, Section> mapper) {
+    public SectionService(SectionRepository repo, Mapper<SectionDTO, Section> mapper, Mapper<StudentDTO, Student> sMapper) {
         this.repo = repo;
         this.mapper = mapper;
+        this.sMapper = sMapper;
     }
 
     @Override
@@ -79,5 +82,17 @@ public class SectionService implements CrudService<SectionDTO, Integer> {
             throw new ElementNotFoundException(integer);
 
         repo.deleteById(integer);
+    }
+
+    public List<StudentDTO> getStudentsBySectionId(Integer sectionId) throws ElementNotFoundException {
+        if( sectionId == null )
+            throw new IllegalArgumentException();
+        if( !repo.existsById(sectionId) )
+            throw new ElementNotFoundException(sectionId);
+
+        Section section = repo.getOne(sectionId);
+        return section.getStudents().stream()
+                .map(sMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }

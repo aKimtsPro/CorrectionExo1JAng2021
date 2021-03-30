@@ -1,13 +1,10 @@
 package bstorm.akimts.CorrectionExo1.mapper;
 
 import bstorm.akimts.CorrectionExo1.dto.SectionDTO;
-import bstorm.akimts.CorrectionExo1.dto.StudentDTO;
 import bstorm.akimts.CorrectionExo1.entities.Section;
-import bstorm.akimts.CorrectionExo1.entities.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
 import java.util.stream.Collectors;
 
 @Component

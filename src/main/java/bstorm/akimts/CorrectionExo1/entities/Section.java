@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -23,6 +24,7 @@ public class Section {
     private int id;
 
     @Column(name = "section_name")
+    @Size(min = 5)
     private String name;
 
     @Column(name = "delegate_id")

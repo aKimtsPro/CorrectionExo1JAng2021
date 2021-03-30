@@ -17,6 +17,7 @@ public class Professor {
 
     @Id
     @Column(name = "professor_id")
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     int id;
     @Column(name = "professor_name")
     String name;

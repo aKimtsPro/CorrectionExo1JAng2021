@@ -1,6 +1,10 @@
 package bstorm.akimts.CorrectionExo1.presentation;
 
+import bstorm.akimts.CorrectionExo1.dto.rapport.Rapport;
+import bstorm.akimts.CorrectionExo1.dto.rapport.RapportValidation;
 import bstorm.akimts.CorrectionExo1.exceptions.DemoException;
+import bstorm.akimts.CorrectionExo1.exceptions.ElementAlreadyExistsException;
+import bstorm.akimts.CorrectionExo1.exceptions.ElementNotFoundException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,6 +19,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
 public class ControllerAdviser extends ResponseEntityExceptionHandler {
@@ -26,34 +32,61 @@ public class ControllerAdviser extends ResponseEntityExceptionHandler {
                 .body(request.getRequestURI() + " -> depuis le controller advice");
     }
 
+    @ExceptionHandler({ElementNotFoundException.class, ElementAlreadyExistsException.class})
+    public ResponseEntity<Rapport> handleElementNotFound(Exception ex, HttpServletRequest request){
+
+        Rapport rapport = new Rapport(
+                ex.getMessage(),
+                request.getRequestURI(),
+                HttpStatus.BAD_REQUEST.value()
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(rapport);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<RapportValidation> handleConstraint(ConstraintViolationException ex, WebRequest request){
+
+        RapportValidation rv = new RapportValidation(
+                "Constraintes invalidées",
+                request.getDescription(false),
+                HttpStatus.BAD_REQUEST.value()
+        );
+
+        for (ConstraintViolation<?> constraintViolation : ex.getConstraintViolations()) {
+            rv.addError(true, constraintViolation.getMessage());
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(rv);
+    }
+
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        StringBuilder builder = new StringBuilder();
 
-        if( ex.getGlobalErrorCount() > 0 )
-        {
-            builder.append("- global errors -------------------");
-            for (ObjectError globalError : ex.getBindingResult().getGlobalErrors()) {
-                builder.append("\n")
-                        .append( globalError.getObjectName() )
-                        .append(" - ")
-                        .append( globalError.getDefaultMessage() );
-            }
-            builder.append("\n");
+        RapportValidation rp = new RapportValidation(
+                "Erreur de validation",
+                request.getDescription(false),
+                HttpStatus.BAD_REQUEST.value()
+        );
+
+        for (ObjectError globalError : ex.getBindingResult().getGlobalErrors()) {
+            rp.addError(true, globalError.getDefaultMessage() );
         }
 
-        if( ex.getFieldErrorCount() > 0 )
-        {
-            builder.append("- field errors -------------------");
-            for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
-                builder.append("\n")
-                        .append( fieldError.getField() )
-                        .append(" - ")
-                        .append( fieldError.getDefaultMessage() );
-            }
+        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+            rp.addError(false, error.getField() + " - " + error.getDefaultMessage());
         }
 
-        return ResponseEntity.badRequest().body(builder.toString());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(rp);
     }
+
+
 
 }

@@ -1,17 +1,15 @@
 package bstorm.akimts.CorrectionExo1.presentation;
 
 import bstorm.akimts.CorrectionExo1.dto.SectionDTO;
-import bstorm.akimts.CorrectionExo1.exceptions.ElementAlreadyExistsException;
+import bstorm.akimts.CorrectionExo1.dto.StudentDTO;
 import bstorm.akimts.CorrectionExo1.exceptions.ElementNotFoundException;
 import bstorm.akimts.CorrectionExo1.service.CrudService;
+import bstorm.akimts.CorrectionExo1.service.SectionService;
 import org.springframework.context.annotation.Profile;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/section") // localhost:8080/section
@@ -46,5 +44,11 @@ public class SectionController extends AbstractCrudController<SectionDTO, Intege
 //                    .build();
 //        }
 //    }
+
+    @GetMapping("/students/{id}")
+    public ResponseEntity<List<StudentDTO>> getStudentFromSection(@PathVariable("id") Integer id) throws ElementNotFoundException {
+        List<StudentDTO> studentDTOS = ((SectionService)service).getStudentsBySectionId(id);
+        return ResponseEntity.ok(studentDTOS);
+    }
 
 }

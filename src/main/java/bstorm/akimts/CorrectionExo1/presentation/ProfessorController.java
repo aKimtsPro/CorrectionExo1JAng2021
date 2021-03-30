@@ -4,6 +4,8 @@ import bstorm.akimts.CorrectionExo1.dto.ProfessorDTO;
 import bstorm.akimts.CorrectionExo1.service.CrudService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,5 +21,4 @@ public class ProfessorController extends AbstractCrudController<ProfessorDTO, In
     public ProfessorController(CrudService<ProfessorDTO, Integer> service) {
         super(service);
     }
-
 }

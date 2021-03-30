@@ -1,4 +1,4 @@
-package bstorm.akimts.CorrectionExo1.rapport;
+package bstorm.akimts.CorrectionExo1.dto.rapport;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,12 +7,13 @@ import lombok.Setter;
 public class Rapport {
 
     private String message;
-    private int code;
     private String chemin;
+    private int status;
 
-    public Rapport(String message, int code, String chemin) {
+    public Rapport(String message, String chemin, int status) {
         this.message = message;
-        this.code = code;
         this.chemin = chemin;
+        this.status = status;
     }
+
 }

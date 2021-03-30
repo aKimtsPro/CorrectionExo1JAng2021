@@ -1,9 +1,6 @@
 package bstorm.akimts.CorrectionExo1;
 
 import bstorm.akimts.CorrectionExo1.dto.SectionDTO;
-import bstorm.akimts.CorrectionExo1.exceptions.ElementAlreadyExistsException;
-import bstorm.akimts.CorrectionExo1.exceptions.ElementNotFoundException;
-import bstorm.akimts.CorrectionExo1.service.SectionService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
