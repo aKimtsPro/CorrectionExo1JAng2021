@@ -1,10 +1,12 @@
 package bstorm.akimts.CorrectionExo1.presentation;
 
 import bstorm.akimts.CorrectionExo1.exceptions.DemoException;
+import bstorm.akimts.CorrectionExo1.rapport.Rapport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
@@ -32,9 +34,16 @@ public class DemoController {
     }
 
     @ExceptionHandler(DemoException.class)
-    public ResponseEntity<String> demoHandler(DemoException ex){
+    public ResponseEntity<Rapport> demoHandler(DemoException ex, HttpServletRequest request){
+
+        Rapport r = new Rapport(
+                ex.getMessage(),
+                HttpStatus.I_AM_A_TEAPOT.value(),
+                request.getRequestURI()
+        );
+
         return ResponseEntity
                 .status(HttpStatus.I_AM_A_TEAPOT)
-                .body(ex.getMessage());
+                .body(r);
     }
 }

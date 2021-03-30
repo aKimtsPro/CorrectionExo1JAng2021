@@ -4,6 +4,8 @@ import bstorm.akimts.CorrectionExo1.dto.ProfessorDTO;
 import bstorm.akimts.CorrectionExo1.service.CrudService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +20,4 @@ public class ProfessorController extends AbstractCrudController<ProfessorDTO, In
         super(service);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleValidation(MethodArgumentNotValidException ex){
-        return ex.getMessage();
-    }
 }

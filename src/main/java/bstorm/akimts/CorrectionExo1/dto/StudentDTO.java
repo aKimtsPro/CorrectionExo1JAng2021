@@ -20,6 +20,7 @@ public class StudentDTO implements IdentifiedDTO<Integer> {
     String firstname;
     @NotBlank // @NotEmpty
     String lastname;
+    @NotNull
     @PastOrPresent // @Past // @Future // @FuturOrPresent
     LocalDateTime birthdate;
     //@Pattern(regexp = "")

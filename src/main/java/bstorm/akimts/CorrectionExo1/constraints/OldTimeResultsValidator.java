@@ -11,6 +11,10 @@ public class OldTimeResultsValidator implements ConstraintValidator<OldTimeResul
     @Override
     public boolean isValid(StudentDTO value, ConstraintValidatorContext context) {
 
+        if( value.getBirthdate() == null || value.getResult() == null ){
+            return false;
+        }
+
         if( value.getBirthdate().isBefore( LocalDateTime.now().minusYears(50) ) )
         {
             context.disableDefaultConstraintViolation();
