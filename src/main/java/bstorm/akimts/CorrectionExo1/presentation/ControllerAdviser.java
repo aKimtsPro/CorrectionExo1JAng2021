@@ -5,6 +5,7 @@ import bstorm.akimts.CorrectionExo1.dto.rapport.RapportValidation;
 import bstorm.akimts.CorrectionExo1.exceptions.DemoException;
 import bstorm.akimts.CorrectionExo1.exceptions.ElementAlreadyExistsException;
 import bstorm.akimts.CorrectionExo1.exceptions.ElementNotFoundException;
+import bstorm.akimts.CorrectionExo1.exceptions.WrongPageException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -62,6 +64,17 @@ public class ControllerAdviser extends ResponseEntityExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(rv);
+    }
+
+    @ExceptionHandler(WrongPageException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public Rapport handleWrongPage(WrongPageException ex, WebRequest request){
+        return new Rapport(
+                ex.getMessage(),
+                request.getDescription(false),
+                HttpStatus.BAD_REQUEST.value()
+        );
     }
 
 
