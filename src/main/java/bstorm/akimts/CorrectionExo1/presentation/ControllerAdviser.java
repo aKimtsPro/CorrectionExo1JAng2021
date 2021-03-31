@@ -2,10 +2,7 @@ package bstorm.akimts.CorrectionExo1.presentation;
 
 import bstorm.akimts.CorrectionExo1.dto.rapport.Rapport;
 import bstorm.akimts.CorrectionExo1.dto.rapport.RapportValidation;
-import bstorm.akimts.CorrectionExo1.exceptions.DemoException;
-import bstorm.akimts.CorrectionExo1.exceptions.ElementAlreadyExistsException;
-import bstorm.akimts.CorrectionExo1.exceptions.ElementNotFoundException;
-import bstorm.akimts.CorrectionExo1.exceptions.WrongPageException;
+import bstorm.akimts.CorrectionExo1.exceptions.*;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -77,6 +74,16 @@ public class ControllerAdviser extends ResponseEntityExceptionHandler {
         );
     }
 
+    @ExceptionHandler({InvalidPageSizeException.class, InvalidPageNbrException.class})
+    public ResponseEntity<Rapport> handleInvalidPageRequest(Exception ex, WebRequest request){
+        return ResponseEntity.badRequest().body(
+                new Rapport(
+                        ex.getMessage(),
+                        request.getDescription(false),
+                        HttpStatus.BAD_REQUEST.value()
+                )
+        );
+    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {

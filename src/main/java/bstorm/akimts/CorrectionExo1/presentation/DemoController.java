@@ -38,11 +38,12 @@ public class DemoController {
         if( pageNbr >= page.getTotalPages() )
             throw new WrongPageException(pageNbr, page.getTotalPages()-1);
 
-        PagedContainer<StudentDTO> container = new PagedContainer<>(
-                page.stream().collect(Collectors.toList()),
+        PagedContainer<StudentDTO> container = new PagedContainer<StudentDTO>(
+                page.getContent(),
                 page.getTotalPages(),
                 page.getNumberOfElements(),
-                page.getNumber()
+                page.getNumber(),
+                page.getTotalElements()
         );
 
         if( page.hasNext() )

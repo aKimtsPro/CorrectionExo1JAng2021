@@ -44,7 +44,7 @@ public class StudentMapper implements Mapper<StudentDTO, Student> {
                 .login(dto.getLogin())
                 .courseId(dto.getCourseId())
                 .result(dto.getResult())
-                .section(repo.getOne(dto.getSection().getId()))
+                .section(dto.getSection() == null ? null : repo.getOne(dto.getSection().getId()))
                 .build();
     }
 }

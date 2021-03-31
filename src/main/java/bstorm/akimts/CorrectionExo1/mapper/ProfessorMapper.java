@@ -39,7 +39,7 @@ public class ProfessorMapper implements Mapper<ProfessorDTO, Professor> {
             return null;
 
         return Professor.builder()
-                .id(dto.getId())
+                .id( dto.getId() )
                 .name(dto.getName())
                 .surname(dto.getSurname())
                 .office(dto.getOffice())
