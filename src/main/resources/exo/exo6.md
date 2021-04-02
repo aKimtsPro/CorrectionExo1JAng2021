@@ -1,4 +1,6 @@
 
+#Exo 6 - Les customs query
+
 Mettez en place un controller permettant d'intéragir avec les cours de la DB.
 
 Ce controller devra permettre les actions suivantes

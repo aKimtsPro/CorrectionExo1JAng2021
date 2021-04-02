@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -39,5 +40,7 @@ public class ProfessorDTO implements IdentifiedDTO<Integer> {
     Integer wage;
     @NotNull
     SmallSectionDTO section;
+
+    List<SmallCourseDTO> cours;
 
 }

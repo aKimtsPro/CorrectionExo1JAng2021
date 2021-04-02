@@ -5,14 +5,18 @@ import bstorm.akimts.CorrectionExo1.entities.Professor;
 import bstorm.akimts.CorrectionExo1.repository.SectionRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
 public class ProfessorMapper implements Mapper<ProfessorDTO, Professor> {
 
-    private final SmallSectionMapper mapper;
+    private final SmallSectionMapper sMapper;
+    private final SmallCourseMapper courseMapper;
     private final SectionRepository sectionRepo;
 
-    public ProfessorMapper(SmallSectionMapper mapper, SectionRepository sectionRepo) {
-        this.mapper = mapper;
+    public ProfessorMapper(SmallSectionMapper mapper, SmallCourseMapper courseMapper, SectionRepository sectionRepo) {
+        this.sMapper = mapper;
+        this.courseMapper = courseMapper;
         this.sectionRepo = sectionRepo;
     }
 
@@ -27,9 +31,10 @@ public class ProfessorMapper implements Mapper<ProfessorDTO, Professor> {
                 .surname( p.getSurname() )
                 .office( p.getOffice() )
                 .email( p.getEmail() )
-                .section(  mapper.toDTO(p.getSection()) )
+                .section( sMapper.toDTO(p.getSection()) )
                 .wage( p.getWage() )
                 .hireDate( p.getHireDate() )
+                .cours( p.getCoursList() == null ? null : p.getCoursList().stream().map(courseMapper::toDTO).collect(Collectors.toList()) )
                 .build();
     }
 

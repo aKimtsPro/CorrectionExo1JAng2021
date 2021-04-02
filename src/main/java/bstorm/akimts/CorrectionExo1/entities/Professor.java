@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -35,4 +36,7 @@ public class Professor {
     @ManyToOne
     @JoinColumn(name = "section_id")
     Section section;
+
+    @OneToMany(mappedBy = "professor")
+    List<Course> coursList;
 }

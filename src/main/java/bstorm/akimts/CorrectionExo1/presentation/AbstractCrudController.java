@@ -49,6 +49,7 @@ public abstract class AbstractCrudController<DTO extends IdentifiedDTO<ID>, ID> 
         service.delete(id);
         return ResponseEntity.ok( dto );
     }
+
     @Override
     @PostMapping // POST - {domaine}/student
     @Transactional
