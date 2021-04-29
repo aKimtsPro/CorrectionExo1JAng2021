@@ -61,7 +61,7 @@ public class DemoController {
 
 
 
-    @GetMapping("/truc/{id}")
+    @PostMapping("/truc/{id}")
     public ResponseEntity<DemoDTO> truc(@RequestBody String body, @PathVariable("id") int id) {
 
         System.out.println(body);

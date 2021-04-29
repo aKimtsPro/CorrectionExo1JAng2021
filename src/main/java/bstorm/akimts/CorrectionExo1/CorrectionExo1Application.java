@@ -14,7 +14,7 @@ public class CorrectionExo1Application {
 //
 //		SectionDTO dto = SectionDTO.builder()
 //				.id(1111)
-//				.name("test course")
+//				.name("Test course")
 //				.delegateId(1)
 //				.build();
 

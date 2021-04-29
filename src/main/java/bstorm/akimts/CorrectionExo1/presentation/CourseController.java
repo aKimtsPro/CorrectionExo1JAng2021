@@ -12,7 +12,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/course")
 public class CourseController {
-
     private final CourseService service;
 
     public CourseController(CourseService service) {

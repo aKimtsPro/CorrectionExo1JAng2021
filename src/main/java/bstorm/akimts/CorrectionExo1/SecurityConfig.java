@@ -1,6 +1,7 @@
 package bstorm.akimts.CorrectionExo1;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -40,12 +43,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/demo/**").permitAll()
-                .antMatchers(HttpMethod.GET).authenticated()
-                .antMatchers(HttpMethod.POST).hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT).hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE).hasRole("ADMIN")
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .cors()
                 .and()
                 .httpBasic();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource(){
+
+        CorsConfiguration conf = new CorsConfiguration();
+
+        conf.addAllowedOrigin("http://localhost:4200");
+        conf.addAllowedMethod("*");
+        conf.addAllowedHeader("*");
+        conf.addExposedHeader("Authorization");
+        conf.setAllowCredentials(true);
+
+        return request -> conf;
+
     }
 }
