@@ -23,14 +23,15 @@ public class StudentService implements CrudService<StudentDTO, Integer> {
     }
 
     @Override
-    public void insert(StudentDTO toInsert) throws ElementAlreadyExistsException {
+    public StudentDTO insert(StudentDTO toInsert) throws ElementAlreadyExistsException {
         if( toInsert == null )
             throw new IllegalArgumentException();
 
         if( repo.existsById(toInsert.getId()) )
             throw new ElementAlreadyExistsException();
 
-        repo.save( mapper.toEntity(toInsert) );
+        Student saved = repo.save( mapper.toEntity(toInsert) );
+        return mapper.toDTO(saved);
     }
 
     @Override

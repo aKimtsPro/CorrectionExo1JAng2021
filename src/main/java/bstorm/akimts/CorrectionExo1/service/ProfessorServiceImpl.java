@@ -9,7 +9,6 @@ import bstorm.akimts.CorrectionExo1.mapper.Mapper;
 import bstorm.akimts.CorrectionExo1.repository.ProfessorRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,13 +26,15 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public void insert(ProfessorDTO toInsert) throws ElementAlreadyExistsException {
+    public ProfessorDTO insert(ProfessorDTO toInsert) throws ElementAlreadyExistsException {
         if( toInsert == null )
             throw new IllegalArgumentException();
         if( repo.existsById(toInsert.getId()) )
             throw new ElementAlreadyExistsException();
 
-        repo.save(mapper.toEntity(toInsert));
+        Professor saved = repo.save(mapper.toEntity(toInsert));
+        return mapper.toDTO(saved);
+
     }
 
     @Override

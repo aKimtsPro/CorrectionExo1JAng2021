@@ -28,14 +28,15 @@ public class SectionService implements CrudService<SectionDTO, Integer> {
     }
 
     @Override
-    public void insert(SectionDTO toInsert) throws ElementAlreadyExistsException {
+    public SectionDTO insert(SectionDTO toInsert) throws ElementAlreadyExistsException {
         if( toInsert == null )
             throw new IllegalArgumentException();
 
         if( repo.existsById(toInsert.getId()) )
             throw new ElementAlreadyExistsException();
 
-        repo.save( mapper.toEntity(toInsert) );
+        Section saved = repo.save( mapper.toEntity(toInsert) );
+        return mapper.toDTO(saved);
     }
 
     @Override

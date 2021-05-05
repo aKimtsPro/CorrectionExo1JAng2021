@@ -8,7 +8,7 @@ import java.util.List;
 public interface CrudService<DTO, ID> {
 
     // Create
-    void insert(DTO toInsert) throws ElementAlreadyExistsException;
+    DTO insert(DTO toInsert) throws ElementAlreadyExistsException;
 
     // Read
     DTO getOne(ID id) throws ElementNotFoundException;

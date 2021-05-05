@@ -54,7 +54,7 @@ public abstract class AbstractCrudController<DTO extends IdentifiedDTO<ID>, ID> 
     @PostMapping // POST - {domaine}/student
     @Transactional
     public ResponseEntity<DTO> create(@Valid @RequestBody DTO dto) throws ElementAlreadyExistsException, ElementNotFoundException {
-        service.insert(dto);
-        return ResponseEntity.ok( service.getOne(dto.getId()) );
+        DTO saved = service.insert(dto);
+        return ResponseEntity.ok( service.getOne(saved.getId()) );
     }
 }
